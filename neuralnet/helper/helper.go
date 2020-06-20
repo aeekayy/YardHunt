@@ -9,7 +9,7 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
-// perform matrix dot multiplication on two 
+// perform matrix dot multiplication on two
 // matrices
 func dot(m, n mat.Matrix) mat.Matrix {
 	r, _ := m.Dims()
