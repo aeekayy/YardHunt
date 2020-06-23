@@ -16,6 +16,7 @@ type ActivationOperationEnum string
 const (
 	ActivationOperationSign    ActivationOperationEnum = "sign"
 	ActivationOperationSigmoid ActivationOperationEnum = "sigmoid"
+	ActivationOperationTanh	   ActivationOperationEnum = "tanh"
 )
 
 // Perceptron code representation of a neuron
@@ -32,6 +33,10 @@ func (neuron *Perceptron) Activate(input float64) (out float64) {
 	case ActivationOperationSign:
 		// if > 0 then return 1, < 0 return -1
 		return input / math.Abs(input)
+	case ActivationOperationSigmoid:
+		return 1.0 / (1.0 + math.Exp(-input))
+	case ActivationOperationTanh:
+		return 1.7159 * math.Tanh(2.0/3.0*input)
 	default:
 		return 1
 	}
@@ -41,4 +46,16 @@ func (neuron *Perceptron) Activate(input float64) (out float64) {
 func (neuron *Perceptron) Output(inputs, weights *mat.Vector) (output float64) {
 	// return the dot multiplication of the two vectors
 	return mat.Dot(inputs, weights)
+}
+
+func (neuron *Perceptron) Process(input *mat.Vector) (output, sum float64) {
+	sum := mat.Dot(inputs, n.weights)
+
+	// save the inputs
+	n.inputs = inputs
+
+	// Todo: Add Bias terms
+
+	// return the activation and save
+	return neuron.Activate(sum), sum
 }
